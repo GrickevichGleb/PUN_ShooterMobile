@@ -15,47 +15,49 @@ namespace Player
         private Vector2 _moveInput;
         private Vector2 _lookInput;
 
+        private Vector2 _prevLookInput;
+
         private void Start()
         {
-            // Enabling control scheme 
-            _playerControls = new PlayerControls();
-            _playerControls.Enable();
-            
-            _photonView = GetComponent<PlayerController>().GetPhotonView();
+            // // Enabling control scheme 
+            // _playerControls = new PlayerControls();
+            // _playerControls.Enable();
+            //
+            // _photonView = GetComponent<PlayerController>().GetPhotonView();
         }
 
 
-        private void Update()
-        {
-            if (!_photonView.IsMine) return;
-            
-            GetInputs();
-            MovePlayer();
-            RotatePlayer();
-        }
+        // private void Update()
+        // {
+        //     if (!_photonView.IsMine) return;
+        //     
+        //     GetInputs();
+        //     //MovePlayer();
+        //     RotatePlayer();
+        // }
 
-        private void MovePlayer()
+        public void MovePlayer(Vector2 moveInput)
         {
-            if (_moveInput == Vector2.zero) return;
+            //if (_moveInput == Vector2.zero) return;
             
             transform.Translate(
-                _moveInput.normalized * (moveSpeed * Time.deltaTime),
+                moveInput.normalized * (moveSpeed * Time.deltaTime),
                 Space.World
             );
         }
 
-        private void RotatePlayer()
+        public void RotatePlayer(Vector2 lookInput)
         {
-            if (_lookInput == Vector2.zero) return;
-
+            //if (_lookInput == Vector2.zero) return;
+        
             transform.up =
-                Vector2.Lerp(transform.up, _lookInput, 1f);
+                Vector2.Lerp(transform.up, lookInput.normalized, 1f);
         }
 
-        private void GetInputs()
-        {
-            _moveInput = _playerControls.Player.Move.ReadValue<Vector2>();
-            _lookInput = _playerControls.Player.Look.ReadValue<Vector2>();
-        }
+        // private void GetInputs()
+        // {
+        //     _moveInput = _playerControls.Player.Move.ReadValue<Vector2>();
+        //     _lookInput = _playerControls.Player.Look.ReadValue<Vector2>();
+        // }
     }
 }

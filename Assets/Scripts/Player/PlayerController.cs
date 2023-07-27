@@ -24,10 +24,21 @@ namespace Player
         }
         
 
-        // For easier access to PhotonView from other components
+        // Allows easier access for components to each other 
         public PhotonView GetPhotonView()
         {
             return _photonView;
+        }
+
+        public Mover GetMover()
+        {
+            return _playerMover;
+        }
+
+
+        public Fighter GetFighter()
+        {
+            return _playerFighter;
         }
 
     }

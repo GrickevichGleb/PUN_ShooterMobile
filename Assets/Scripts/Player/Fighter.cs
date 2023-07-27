@@ -14,7 +14,8 @@ namespace Player
         public bool isFiring;
 
         private PlayerController _playerController;
-        
+
+        private Vector2 _prevDirInp = Vector2.zero;
 
         // Start is called before the first frame update
         void Start()
@@ -27,13 +28,6 @@ namespace Player
         void Update()
         {
             UpdateFiringVis();
-            
-            if (!_playerController.GetPhotonView().IsMine) return;
-            
-            if (Input.GetKeyDown(KeyCode.Space) && !isFiring)
-            {
-                StartCoroutine(Firing());
-            }
             
         }
 
@@ -51,7 +45,28 @@ namespace Player
                 this.isFiring = (bool)stream.ReceiveNext();
             }
         }
+        
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            // if (_playerController.GetPhotonView().IsMine)
+            //     return;
+            Debug.Log("OnTriggerEnter2D");
 
+            if (other.TryGetComponent<Health>(out Health health))
+            {
+                health.TakeDamage(damage);
+            }
+        }
+
+
+        public void Fire()
+        {
+            if(isFiring) 
+                return;
+
+            StartCoroutine(Firing());
+        }
 
         public int GetDamageVal()
         {
@@ -63,6 +78,7 @@ namespace Player
         {
             gunFireBeam.SetActive(isFiring);
         }
+        
 
         private IEnumerator Firing()
         {

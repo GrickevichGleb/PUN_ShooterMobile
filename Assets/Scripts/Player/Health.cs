@@ -34,19 +34,6 @@ namespace Player
         }
 
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            Debug.Log("OnTriggerEnter2D");
-            if (!_playerController.GetPhotonView().IsMine)
-                return;
-
-            if (other.TryGetComponent<Fighter>(out Fighter fighter))
-            {
-                TakeDamage(fighter.GetDamageVal());
-            }
-        }
-
-
         // Interface for changing _currentHealth
         public void TakeDamage(int damage)
         {
@@ -57,6 +44,12 @@ namespace Player
         public int GetCurrentHealth()
         {
             return _currentHealth;
+        }
+
+
+        public int GetMaxHealth()
+        {
+            return startHealth;
         }
     }
 }
