@@ -39,7 +39,8 @@ namespace Player
             if (_moveInput == Vector2.zero) return;
             
             transform.Translate(
-                _moveInput.normalized * (moveSpeed * Time.deltaTime)
+                _moveInput.normalized * (moveSpeed * Time.deltaTime),
+                Space.World
             );
         }
 

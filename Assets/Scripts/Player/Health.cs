@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -7,11 +8,13 @@ namespace Player
     {
         [SerializeField] private int startHealth = 100;
     
-        private int _currentHealth;
+        public int _currentHealth;
 
-
+        private PlayerController _playerController;
+        
         private void Start()
         {
+            _playerController = GetComponent<PlayerController>();
             _currentHealth = startHealth;
         }
 
@@ -30,6 +33,18 @@ namespace Player
             }
         }
 
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            Debug.Log("OnTriggerEnter2D");
+            if (!_playerController.GetPhotonView().IsMine)
+                return;
+
+            if (other.TryGetComponent<Fighter>(out Fighter fighter))
+            {
+                TakeDamage(fighter.GetDamageVal());
+            }
+        }
 
 
         // Interface for changing _currentHealth

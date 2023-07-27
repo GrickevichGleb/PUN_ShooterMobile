@@ -1,3 +1,4 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
@@ -13,21 +14,15 @@ namespace Player
         private Mover _playerMover;
         private Health _playerHealth;
         private Fighter _playerFighter;
-    
-        // Start is called before the first frame update
-        void Start()
+        
+        private void Awake()
         {
             _photonView = GetComponent<PhotonView>();
             _playerMover = GetComponent<Mover>();
             _playerHealth = GetComponent<Health>();
             _playerFighter = GetComponent<Fighter>();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-            //UpdateMove();
-        }
+        
 
         // For easier access to PhotonView from other components
         public PhotonView GetPhotonView()
