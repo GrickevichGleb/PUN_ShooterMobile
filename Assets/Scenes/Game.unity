@@ -1761,6 +1761,12 @@ MonoBehaviour:
   - target: {fileID: 37766089}
     weight: 1
     radius: 0
+  - target: {fileID: 616615560}
+    weight: 1
+    radius: 0
+  - target: {fileID: 1424231099}
+    weight: 1
+    radius: 0
 --- !u!4 &325091058
 Transform:
   m_ObjectHideFlags: 0
@@ -3073,7 +3079,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.3427486
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3598,7 +3604,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 70.45
   m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 1
