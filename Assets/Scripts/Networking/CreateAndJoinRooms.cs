@@ -30,5 +30,6 @@ namespace Networking
         {
             PhotonNetwork.LoadLevel("Game");
         }
+        
     }
 }

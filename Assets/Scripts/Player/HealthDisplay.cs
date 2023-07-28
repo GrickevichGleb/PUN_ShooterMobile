@@ -17,7 +17,8 @@ namespace Player
         // Update is called once per frame
         void Update()
         {
-            transform.up = Vector3.up;
+            transform.up = Vector3.up; //Always display horizontally 
+            
             UpdateHealthBar();
         }
 

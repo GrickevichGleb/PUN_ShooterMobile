@@ -40,6 +40,7 @@ namespace Controls
         {
             // First check if it's our own player 
             if (!_playerController.GetPhotonView().IsMine) return;
+            if (_playerController.isGameOver) return;
             
             GetInputs();
             ProcessLeftJoyInp();

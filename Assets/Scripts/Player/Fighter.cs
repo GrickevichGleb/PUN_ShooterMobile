@@ -8,6 +8,8 @@ namespace Player
     public class Fighter : MonoBehaviourPunCallbacks, IPunObservable
     {
         [SerializeField] private GameObject gunFireBeam;
+        [SerializeField] private float fireBeamRange;
+        [SerializeField] private float firingTime = 1f;
         [Space] 
         [SerializeField] private int damage;
 
@@ -17,11 +19,16 @@ namespace Player
 
         private Vector2 _prevDirInp = Vector2.zero;
 
+        private Coroutine _firingCoroutine;
+
+        private Vector3 _initScale;
         // Start is called before the first frame update
         void Start()
         {
             _playerController = GetComponent<PlayerController>();
             gunFireBeam.SetActive(false);
+            _initScale = gunFireBeam.transform.localScale;
+
         }
 
         // Update is called once per frame
@@ -49,10 +56,6 @@ namespace Player
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            // if (_playerController.GetPhotonView().IsMine)
-            //     return;
-            Debug.Log("OnTriggerEnter2D");
-
             if (other.TryGetComponent<Health>(out Health health))
             {
                 health.TakeDamage(damage);
@@ -65,7 +68,7 @@ namespace Player
             if(isFiring) 
                 return;
 
-            StartCoroutine(Firing());
+            isFiring = true;
         }
 
         public int GetDamageVal()
@@ -77,15 +80,39 @@ namespace Player
         private void UpdateFiringVis()
         {
             gunFireBeam.SetActive(isFiring);
+            if (isFiring && _firingCoroutine == null)
+            {
+                _firingCoroutine = StartCoroutine(Firing()); 
+            }
+                
         }
         
 
         private IEnumerator Firing()
         {
+            // if(_firingCoroutine != null)
+            //     StopCoroutine(_firingCoroutine);
+            
             isFiring = true;
             Debug.Log("Fired");
-            yield return new WaitForSeconds(1f);
+            //Calculating scale based on initial 
+            //Vector3 initScale = gunFireBeam.transform.localScale;
+            Vector3 incrScale = _initScale;
+            float speedMultiplier = 1f / firingTime;
+            
+            while (gunFireBeam.transform.localScale.y < fireBeamRange * 10f)
+            {
+                //multiply by 10 because beam vis has Y at 0.1 scale
+                incrScale.y += fireBeamRange * Time.deltaTime * speedMultiplier * 10f;
+                gunFireBeam.transform.localScale = incrScale;
+                yield return null;
+            }
+            
+            // Returning to initial state
+            gunFireBeam.transform.localScale = _initScale;
             isFiring = false;
+            
+            _firingCoroutine = null;
         }
     }
 }
