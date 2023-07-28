@@ -37,11 +37,6 @@ namespace Player
             FindObjectOfType<GameController>().OnGameOver += OnGameOverHandler;
         }
 
-        public override void OnLeftRoom()
-        {
-            FindObjectOfType<GameController>().OnGameOver -= OnGameOverHandler;
-        }
-
 
         // Allows easier access for components to each other 
         public PhotonView GetPhotonView()
