@@ -1,5 +1,7 @@
 using System;
+using EnvObjects;
 using Photon.Pun;
+using Player;
 using UnityEngine;
 
 namespace Networking
@@ -27,13 +29,36 @@ namespace Networking
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             nPlayers = PhotonNetwork.PlayerList.Length;
+            
+            CheckGameOver();
         }
 
 
-        private void GameOver()
+        public void GameOver()
         {
             OnGameOver?.Invoke();
             gameOverPopUp.SetActive(true);
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                
+                gameOverPopUp.GetComponent<GameOverPopUp>().
+                    SetWinnerInfo(
+                        playerObj.GetComponent<PlayerController>().GetNickName(),
+                        playerObj.GetComponent<CoinCounter>().GetCoinsCollectedN()
+                        );
+
+            }
+        }
+
+
+        private void CheckGameOver()
+        {
+            if (nPlayers == 1)
+            {
+                // If only one player left
+                GameOver();
+            }
         }
     }
 }

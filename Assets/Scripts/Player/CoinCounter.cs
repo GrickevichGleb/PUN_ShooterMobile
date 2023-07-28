@@ -7,19 +7,14 @@ namespace Player
     public class CoinCounter : MonoBehaviourPunCallbacks, IPunObservable
     {
         private TMP_Text _coinCounterDisp;
-        public int _coinsCollected;
+        private int _coinsCollected;
     
         // Start is called before the first frame update
         void Start()
         {
             _coinCounterDisp = GameObject.FindWithTag("CoinCounter").GetComponent<TMP_Text>();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
-        }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
         {
@@ -43,6 +38,11 @@ namespace Player
             if (!GetComponent<PlayerController>().GetPhotonView().IsMine)
                 return;
             _coinCounterDisp.text = "$: " + _coinsCollected;
+        }
+
+        public int GetCoinsCollectedN()
+        {
+            return _coinsCollected;
         }
     }
 }
