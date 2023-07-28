@@ -30,6 +30,7 @@ namespace Networking
         {
             nPlayers = PhotonNetwork.PlayerList.Length;
             
+            // Checking if only one player left every time someone leaves the room
             CheckGameOver();
         }
 
@@ -41,13 +42,12 @@ namespace Networking
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
             if (playerObj != null)
             {
-                
+                // Display Game Over screen with winner info
                 gameOverPopUp.GetComponent<GameOverPopUp>().
                     SetWinnerInfo(
                         playerObj.GetComponent<PlayerController>().GetNickName(),
                         playerObj.GetComponent<CoinCounter>().GetCoinsCollectedN()
                         );
-
             }
         }
 

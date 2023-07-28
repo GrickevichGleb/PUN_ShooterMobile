@@ -9,11 +9,10 @@ namespace Player
     public class Health : MonoBehaviourPunCallbacks, IPunObservable
     {
         [SerializeField] private int startHealth = 100;
-    
-        public int _currentHealth;
-
-        private PlayerController _playerController;
         
+        private PlayerController _playerController;
+        private int _currentHealth;
+
         private void Start()
         {
             _playerController = GetComponent<PlayerController>();
@@ -45,6 +44,7 @@ namespace Player
         // Interface for changing _currentHealth
         public void TakeDamage(int damage)
         {
+            // Health can't be negative 
             _currentHealth = Mathf.Max(0, _currentHealth - damage);
         }
 

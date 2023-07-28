@@ -27,7 +27,8 @@ namespace Player
             _playerHealth = GetComponent<Health>();
             _playerFighter = GetComponent<Fighter>();
 
-            PhotonNetwork.NickName = "Player " + PhotonNetwork.PlayerList.Length;
+            if(_photonView.IsMine)
+                PhotonNetwork.NickName = "Player " + PhotonNetwork.PlayerList.Length;
             
             Debug.Log(PhotonNetwork.NickName);
         }

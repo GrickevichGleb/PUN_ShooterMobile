@@ -17,8 +17,6 @@ namespace Player
 
         private PlayerController _playerController;
 
-        private Vector2 _prevDirInp = Vector2.zero;
-
         private Coroutine _firingCoroutine;
 
         private Vector3 _initScale;
@@ -26,16 +24,13 @@ namespace Player
         void Start()
         {
             _playerController = GetComponent<PlayerController>();
-            gunFireBeam.SetActive(false);
             _initScale = gunFireBeam.transform.localScale;
-
         }
 
         // Update is called once per frame
         void Update()
         {
             UpdateFiringVis();
-            
         }
 
         // IPunObservable implementation

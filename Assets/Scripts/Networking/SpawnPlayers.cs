@@ -17,6 +17,7 @@ namespace Networking
         private void SpawnPlayer()
         {
             Vector2 pos = new Vector2(6f, 0f);
+            pos.y += Random.Range(-2, 3); // Bit of randomization 
             PhotonNetwork.Instantiate(playerPref.name, pos, Quaternion.identity);
         }
     }
